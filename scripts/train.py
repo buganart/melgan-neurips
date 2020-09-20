@@ -93,12 +93,12 @@ def main():
     # Create data loaders #
     #######################
     train_set = AudioDataset(
-        Path(args.data_path) / "train_files.txt", args.seq_len, sampling_rate=22050
+        Path(args.data_path) / "train_files.txt", args.seq_len, sampling_rate=44100
     )
     test_set = AudioDataset(
         Path(args.data_path) / "test_files.txt",
-        22050 * 4,
-        sampling_rate=22050,
+        44100 * 4,
+        sampling_rate=44100,
         augment=False,
     )
     wandb.save(str(Path(args.data_path) / "train_files.txt"))
@@ -121,8 +121,8 @@ def main():
         test_audio.append(x_t)
 
         audio = x_t.squeeze().cpu()
-        save_sample(root / ("original_%d.wav" % i), 22050, audio)
-        samples.append(wandb.Audio(audio, caption=f"sample {i}", sample_rate=22050))
+        save_sample(root / ("original_%d.wav" % i), 44100, audio)
+        samples.append(wandb.Audio(audio, caption=f"sample {i}", sample_rate=44100))
 
         if i == args.n_test_samples - 1:
             break
@@ -207,10 +207,10 @@ def main():
                     for i, (voc, _) in enumerate(zip(test_voc, test_audio)):
                         pred_audio = netG(voc)
                         pred_audio = pred_audio.squeeze().cpu()
-                        save_sample(root / ("generated_%d.wav" % i), 22050, pred_audio)
+                        save_sample(root / ("generated_%d.wav" % i), 44100, pred_audio)
                         samples.append(
                             wandb.Audio(
-                                pred_audio, caption=f"sample {i}", sample_rate=22050,
+                                pred_audio, caption=f"sample {i}", sample_rate=44100,
                             )
                         )
                     wandb.log(
