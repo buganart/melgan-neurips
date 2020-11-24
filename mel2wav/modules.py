@@ -29,7 +29,7 @@ class Audio2Mel(nn.Module):
         n_fft=1024,
         hop_length=256,
         win_length=1024,
-        sampling_rate=22050,
+        sampling_rate=44100,
         n_mel_channels=80,
         mel_fmin=0.0,
         mel_fmax=None,
